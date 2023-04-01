@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:testelogin/bloc/auth/auth_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -8,8 +10,29 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late AuthBloc authBloc;
+  final TextEditingController _cpfController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    authBloc = BlocProvider.of<AuthBloc>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
+    return BlocConsumer<AuthBloc, AuthState>(
+  listener: (context, state) {
+    // TODO: implement listener
+  },
+  builder: (context, state) {
+    if(state is AuthStateLoading){
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login Governo'),
@@ -23,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               const Text("Digite o CPF"),
               TextFormField(
+                controller: _cpfController,
                 decoration: InputDecoration(
                   hintText: "CPF",
                   focusedBorder: OutlineInputBorder(
@@ -33,11 +57,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(28)),
                 ),
               ),
-              ElevatedButton(onPressed: () {}, child: Text("Logar"))
+              ElevatedButton(
+                  onPressed: () {
+                    print("Pegou");
+                    authBloc
+                        .add(AuthEventLogin(cpf: _cpfController.text.trim()));
+                  },
+                  child: Text("Logar"))
             ],
           ),
         ),
       ),
     );
+  },
+);
   }
 }

@@ -10,7 +10,9 @@ abstract class AuthDatasource {
 class AuthDatasourceIMP implements AuthDatasource {
   @override
   Future<RequestResult> login({required String cpf}) async {
-    final User user = User(client_id: cpf, cpf: cpf);
+    print("Pegou DataAuth: $cpf");
+    User user = User(client_id: cpf, cpf: cpf);
+    print("Pegou DataAuth: ${user.paramsLoagin()}");
     final response = await EndPoint(
             method: Method.GET, url: 'authorize${user.paramsLoagin()}')
         .request();

@@ -22,9 +22,10 @@ class EndPoint {
   });
 
   Future<RequestResult> request() async {
+    print("Dentro result 1: $url");
     final response = await HttpClient.client.request(
       url,
-      data: data??null,
+      data: data,
       //queryParameters: queryParams ?? null,
       options: Options(
         headers: headers,
@@ -34,6 +35,7 @@ class EndPoint {
             isFormUrlEncoded ? Headers.formUrlEncodedContentType : null,
       ),
     );
+    print("Dentro result 2");
     return RequestResult.fromResponse(response);
   }
 

@@ -17,7 +17,9 @@ class AuthRepositoryIMP implements AuthRepository {
   @override
   Future<Either<Failure, User>> login({required String cpf}) async {
     try {
+      print("Chegou repo");
       final resp = await authDatasource.login(cpf: cpf);
+      print(resp.data);
       User user = UserDTO.fromMap(resp.data.first);
       return Right(user);
     } on RequestException catch (e) {
