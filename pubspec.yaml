@@ -41,6 +41,7 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   shared_preferences: ^2.1.0
   dartz: ^0.10.1
+  url_launcher: ^6.1.10
 
 dev_dependencies:
   flutter_test:
